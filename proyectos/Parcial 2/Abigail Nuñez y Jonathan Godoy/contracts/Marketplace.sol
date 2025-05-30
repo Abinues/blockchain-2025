@@ -38,7 +38,9 @@ contract Marketplace is ERC721, ERC721URIStorage, ReentrancyGuard {
     // Permite la búsqueda O(1) para las operaciones del mercado
     mapping(uint256 => Listing) public listings;
 
+
     mapping(address => uint256) private pendingWithdrawals; // Nueva variable de estado, seguimiento de fondos pendientes
+
 
     // Marketplace Event System
     // ------------------------
@@ -108,6 +110,7 @@ contract Marketplace is ERC721, ERC721URIStorage, ReentrancyGuard {
     // 4. Reenvía el pago al vendedor mediante transferencia ETH nativa
     // 5. Emite un evento de venta para el seguimiento de la transacción
     // 6. Incluye comprobaciones de seguridad para el éxito de la transferencia
+
     function buy(uint256 tokenId) external payable nonReentrant {
         Listing storage listing = listings[tokenId];
         require(!listing.isSold, "Already sold");
@@ -143,5 +146,6 @@ contract Marketplace is ERC721, ERC721URIStorage, ReentrancyGuard {
         pendingWithdrawals[msg.sender] = 0;
         (bool success, ) = msg.sender.call{value: amount}("");
         require(success, "Transfer failed");
+
     }
 }
