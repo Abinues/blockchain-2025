@@ -121,6 +121,7 @@ contract Marketplace is ERC721, ERC721URIStorage, ReentrancyGuard {
 
         pendingWithdrawals[listing.owner] += msg.value; // En vez de la transferencia directa, agregue a retiros pendientes
 
+
         emit ItemSold(tokenId, msg.sender, listing.price);
     }
 
